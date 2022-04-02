@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
+  <ion-toolbar color="secondary">
+    <ion-title >
       Previsão do tempo
     </ion-title>
   </ion-toolbar>
@@ -11,17 +11,90 @@
   <ion-card>
     <ion-card-header>
       <ion-card-subtitle>Previsão em:</ion-card-subtitle>
-      <ion-card-title class="ion-text-end" >Lençóis Paulista - SP</ion-card-title>
+      <ion-card-title class="ion-text-start">
+        {{previsao?.results?.city}}
+        <span class="ion-float-end">
+          {{previsao?.results?.temp}}°C
+        </span>
+      </ion-card-title>
     </ion-card-header>
 
     <ion-card-content>
-      <ion-item lines="none">
+
+      <ion-item lines="inset">
         <ion-label>
-         Item
+          {{previsao?.results?.description}}
         </ion-label>
         <ion-icon name="partly-sunny" ></ion-icon>
       </ion-item>
+
+      <ion-item lines="inset">
+        <ion-label class="ion-float-start">
+          Umidade
+        </ion-label>
+        <ion-text class="ion-float-end">
+          {{previsao?.results?.humidity}}%
+        </ion-text>
+      </ion-item>
+
+
+      <ion-item lines="inset">
+        <ion-label class="ion-float-start">
+         Velocidade do vento
+        </ion-label>
+        <ion-text class="ion-float-end">
+          {{previsao?.results?.wind_speedy}}
+        </ion-text>
+      </ion-item>
+
+      <ion-item lines="inset">
+        <ion-label class="ion-float-start">
+          Amanhecer
+        </ion-label>
+        <ion-text class="ion-float-end">
+          {{previsao?.results?.sunrise}}
+        </ion-text>
+      </ion-item>
+
+      <ion-item lines="inset">
+        <ion-label class="ion-float-start">
+          Pôr do sol
+        </ion-label>
+        <ion-text class="ion-float-end">
+          {{previsao?.results?.sunset}}
+        </ion-text>
+      </ion-item>
+
     </ion-card-content>
   </ion-card>
+
+
+    <ion-item-divider>
+      <ion-label>
+        Próximos dias:
+      </ion-label>
+    </ion-item-divider>
+
+<ion-accordion-group>
+  <ion-accordion  *ngFor="let dia of previsao?.results?.forecast let diasemana of previsao?.results?.forecast let condicao of previsao?.results?.forecast let descricao of previsao?.results?.forecast let min of previsao?.results?.forecast let max of previsao?.results?.forecast ">
+    <ion-item slot="header" >
+      <ion-label >{{dia.date}} {{diasemana.weekday}} <span class="ion-float-right"> {{condicao.condition}}</span></ion-label>
+    </ion-item>
+
+    <ion-list slot="content">
+      <ion-item color="light">
+        <ion-label >Descrição:<span class="ion-float-right">{{descricao.description}}</span></ion-label>
+      </ion-item>
+      <ion-item color="light">
+        <ion-label>Máximo:<span class="ion-float-right">{{min.min}}°C</span></ion-label>
+      </ion-item>
+      <ion-item color="light">
+        <ion-label>Mínimo:<span class="ion-float-right">{{max.max}}°C</span></ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-accordion>
+
+
+</ion-accordion-group>
 
 </ion-content>
